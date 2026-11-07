@@ -170,6 +170,27 @@
             });
         },
 
+        openYoutubeUrl: function (url) {
+            var appControl = new tizen.ApplicationControl(
+                'http://tizen.org/appcontrol/operation/view',
+                url,
+                null,
+                null
+            );
+
+            tizen.application.launchAppControl(
+                appControl,
+                null,
+                function () {
+                    postMessage('openYoutubeUrl.success', { url: url });
+                },
+                function (error) {
+                    postMessage('openYoutubeUrl.error', { url: url, error: error.message });
+                    window.open(url, '_blank');
+                }
+            );
+        },
+
         updateMediaSession: function (mediaInfo) {
             postMessage('updateMediaSession', { mediaInfo: mediaInfo });
         },
